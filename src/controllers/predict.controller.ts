@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { predictClassification } from '../utils/inference.util';
 import crypto from 'crypto';
 import { storeData } from '../utils/saveData.util';
+import { Firestore } from '@google-cloud/firestore';
 
 export const postPredict = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -30,6 +31,31 @@ export const postPredict = async (req: Request, res: Response, next: NextFunctio
       status: 'success',
       message: 'Model is predicted successfully',
       data,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getPredictions = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const db = new Firestore();
+
+    const snapshot = await db.collection('predictions').get();
+
+    const histories = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      history: {
+        id: doc.id,
+        result: doc.data().result,
+        suggestion: doc.data().suggestion,
+        createdAt: doc.data().createdAt,
+      },
+    }));
+
+    res.status(200).json({
+      status: 'success',
+      data: histories,
     });
   } catch (error) {
     next(error);

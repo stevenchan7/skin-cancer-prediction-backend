@@ -63,7 +63,7 @@ loadModel()
     app.set('model', model);
   })
   .then(() => {
-    app.listen(port, () => {
+    app.listen(Number(port), () => {
       return console.log(`Express is listening at http://localhost:${port}`);
     });
   })
