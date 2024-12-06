@@ -28,7 +28,7 @@ app.use(predictRouter);
 app.use((err, req, res: Response, next) => {
   if (err instanceof MulterError) {
     if (err.code === 'LIMIT_FILE_SIZE') {
-      res.status(400).json({
+      res.status(413).json({
         status: 'fail',
         message: 'Payload content length greater than maximum allowed: 1000000',
       });

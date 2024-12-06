@@ -27,7 +27,7 @@ export const postPredict = async (req: Request, res: Response, next: NextFunctio
 
     await storeData(id, data);
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       message: 'Model is predicted successfully',
       data,

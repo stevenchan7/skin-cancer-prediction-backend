@@ -16,7 +16,7 @@ export const predictClassification = async (model: tf.GraphModel, image: Uint8Ar
       label = 'Cancer';
       suggestion = 'Segera periksa ke dokter!';
     } else {
-      label = 'Non-Cancer';
+      label = 'Non-cancer';
       suggestion = 'Penyakit kanker tidak terdeteksi.';
     }
 
